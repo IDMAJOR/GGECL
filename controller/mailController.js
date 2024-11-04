@@ -33,7 +33,7 @@ const sendEmail = async (req, res) => {
     const mailOptions = {
       from: process.env.USER, // Your email address
       replyTo: email, // Client's email
-      to: process.env.USER, // Your email address to receive the message
+      to: "jodicksonjoshua@gmail.com", // Your email address to receive the message
       subject: subject, // Subject line
       text: message,
       html: `   
