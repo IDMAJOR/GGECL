@@ -199,7 +199,7 @@ const checkAdmin = async (req, res) => {
 };
 
 const searchUsers = async (req, res) => {
-  const { query } = req.query;
+  const { query } = req.body;
 
   console.log("Search query received:", query); // Log the query to verify
 
@@ -210,7 +210,6 @@ const searchUsers = async (req, res) => {
       $or: [
         { title: searchQuery },
         { excerpt: searchQuery },
-        { content: searchQuery },
         { category: searchQuery },
         { readingTime: searchQuery },
         { views: searchQuery },
