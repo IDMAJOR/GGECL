@@ -31,7 +31,7 @@ const sendEmail = async (req, res) => {
 
     // Set up email options
     const mailOptions = {
-      from: process.env.USER, // Your email address
+      from: "database@ggecl.com", // Your email address
       replyTo: email, // Client's email
       to: "jodicksonjoshua@gmail.com", // Your email address to receive the message
       subject: subject, // Subject line
@@ -120,8 +120,8 @@ const contactUs = async (req, res) => {
     });
 
     const mailOptions = {
-      from: email, // Use your email address
-      replyTo: process.env.USER, // Client's email
+      from: "database@ggecl.com", // Use your email address
+      replyTo: email, // Client's email
       to: "jodicksonjoshua@gmail.com", // Your email address to receive the message
       subject: "New email from G.G.E.C.L website", // Subject line
       text: message,

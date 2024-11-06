@@ -201,8 +201,10 @@ const checkAdmin = async (req, res) => {
 const searchUsers = async (req, res) => {
   const { query } = req.query;
 
+  console.log("Search query received:", query); // Log the query to verify
+
   try {
-    const searchQuery = new RegExp(query, "i");
+    const searchQuery = new RegExp(query, "i"); // Case-insensitive, partial match
 
     const posts = await BlogModel.find({
       $or: [
@@ -215,6 +217,10 @@ const searchUsers = async (req, res) => {
         { author: searchQuery },
       ],
     });
+
+    if (posts.length === 0) {
+      return res.status(404).json({ message: "No results found" });
+    }
 
     res.status(200).json({
       posts: posts.map((post) => ({ ...post.toObject(), id: post._id })),
