@@ -5,14 +5,14 @@ const getSentEmail = async (req, res) => {
   try {
     const mailAndMessage = await mailModel.find({});
 
-    if (!mailAndMessage) {
-      res.status(404).send({ message: "No mail has been recieved" });
+    if (mailAndMessage.length === 0) {
+      return res.status(404).send({ message: "No mail has been received" });
     }
 
     res.status(200).send(mailAndMessage);
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).send({ details: error.message });
   }
 };
 
@@ -192,4 +192,20 @@ const contactUs = async (req, res) => {
   }
 };
 
-module.exports = { getSentEmail, sendEmail, contactUs };
+const feedbackDelete = async (req, res) => {
+  const { emailId } = req.params;
+
+  try {
+    const deleteFeed = await mailModel.findByIdAndDelete(emailId);
+
+    if (!deleteFeed) {
+      res.status(500).send("Message not found!");
+    }
+    res.status(200).send("Message has been deleted");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ details: error.message });
+  }
+};
+
+module.exports = { getSentEmail, sendEmail, feedbackDelete, contactUs };

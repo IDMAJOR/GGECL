@@ -50,15 +50,6 @@ const createBlogPost = async (req, res) => {
   } = req.body;
 
   try {
-    // Check if the adminAuthId matches an existing admin in the database
-    const isAdmin = await AdminModel.findOne({ adminAuthId: req.adminAuthId });
-
-    if (!isAdmin) {
-      return res
-        .status(403)
-        .send({ message: "Unauthorized. Admin verification failed" });
-    }
-
     const blogPost = await BlogModel.create({
       title,
       excerpt,
@@ -93,14 +84,7 @@ const updatePost = async (req, res) => {
   } = req.body;
 
   try {
-    // Verify adminAuthId matches
-    const isAdmin = await AdminModel.findOne({ adminAuthId: req.adminAuthId });
-
-    if (!isAdmin) {
-      return res
-        .status(403)
-        .send({ message: "Unauthorized. Admin verification failed" });
-    }
+    // Verify adminAuthId matche
 
     const postUpdate = await BlogModel.findByIdAndUpdate(
       contentId,
@@ -133,15 +117,6 @@ const deletePost = async (req, res) => {
   const { contentId } = req.params;
 
   try {
-    // Verify adminAuthId matches
-    const isAdmin = await AdminModel.findOne({ adminAuthId: req.adminAuthId });
-
-    if (!isAdmin) {
-      return res
-        .status(403)
-        .send({ message: "Unauthorized. Admin verification failed" });
-    }
-
     const deleteP = await BlogModel.findByIdAndDelete(contentId);
 
     if (!deleteP) {
@@ -227,10 +202,8 @@ const searchUsers = async (req, res) => {
   const { query } = req.query;
 
   try {
-    // Use a regular expression to make the search case-insensitive and partial
     const searchQuery = new RegExp(query, "i");
 
-    // Search users by username, email, or any other fields you want
     const posts = await BlogModel.find({
       $or: [
         { title: searchQuery },
@@ -243,7 +216,9 @@ const searchUsers = async (req, res) => {
       ],
     });
 
-    res.status(200).json(posts);
+    res.status(200).json({
+      posts: posts.map((post) => ({ ...post.toObject(), id: post._id })),
+    });
   } catch (error) {
     res
       .status(500)

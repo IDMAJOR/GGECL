@@ -10,6 +10,7 @@ const {
   createAdmin,
   checkAdmin,
   signAdmin,
+  searchUsers,
 } = require("../controller/blogControllers");
 
 router.route("/get-posts").get(getBlogPost);
@@ -19,8 +20,9 @@ router
   .post(createAdmin);
 router.get("/check-admin", verifyAdmin, checkAdmin);
 router.post("/sign-admin", signAdmin);
-router.post("/create-posts", verifyAdmin, createBlogPost);
-router.put("/update", verifyAdmin, updatePost);
-router.delete("/delete/:contentId", verifyAdmin, deletePost);
+router.post("/create-posts", createBlogPost);
+router.put("/update", updatePost);
+router.delete("/delete/:contentId", deletePost);
+router.route("/search").post(searchUsers);
 
 module.exports = router;
