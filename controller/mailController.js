@@ -122,7 +122,7 @@ const contactUs = async (req, res) => {
     const mailOptions = {
       from: email, // Use your email address
       replyTo: process.env.USER, // Client's email
-      to: process.env.USER, // Your email address to receive the message
+      to: "jodicksonjoshua@gmail.com", // Your email address to receive the message
       subject: "New email from GGEC website", // Subject line
       text: message,
       html: `   
