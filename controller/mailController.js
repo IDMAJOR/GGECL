@@ -123,7 +123,7 @@ const contactUs = async (req, res) => {
       from: email, // Use your email address
       replyTo: process.env.USER, // Client's email
       to: "jodicksonjoshua@gmail.com", // Your email address to receive the message
-      subject: "New email from GGEC website", // Subject line
+      subject: "New email from G.G.E.C.L website", // Subject line
       text: message,
       html: `   
       <div style="
