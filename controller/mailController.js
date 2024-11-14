@@ -33,7 +33,7 @@ const sendEmail = async (req, res) => {
     const mailOptions = {
       from: "database@ggecl.com", // Your email address
       replyTo: email, // Client's email
-      to: "jodicksonjoshua@gmail.com", // Your email address to receive the message
+      to: "database@ggecl.com", // Your email address to receive the message
       subject: subject, // Subject line
       text: message,
       html: `   
@@ -122,7 +122,7 @@ const contactUs = async (req, res) => {
     const mailOptions = {
       from: "database@ggecl.com", // Use your email address
       replyTo: email, // Client's email
-      to: "jodicksonjoshua@gmail.com", // Your email address to receive the message
+      to: "database@ggecl.com", // Your email address to receive the message
       subject: "New email from G.G.E.C.L website", // Subject line
       text: message,
       html: `   
