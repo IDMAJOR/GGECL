@@ -20,7 +20,6 @@ const sendEmail = async (req, res) => {
   const { name, email, subject, message } = req.body;
 
   try {
-    // Create a Nodemailer transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -31,10 +30,10 @@ const sendEmail = async (req, res) => {
 
     // Set up email options
     const mailOptions = {
-      from: "database@ggecl.com", // Your email address
-      replyTo: email, // Client's email
-      to: "database@ggecl.com", // Your email address to receive the message
-      subject: subject, // Subject line
+      from: "database@ggecl.com",
+      replyTo: email,
+      to: "database@ggecl.com",
+      subject: subject,
       text: message,
       html: `   
         <div style="
@@ -87,17 +86,14 @@ const sendEmail = async (req, res) => {
         </div>`,
     };
 
-    // Send the email
     await transporter.sendMail(mailOptions);
 
-    // Save the email data to the database
     const emailSent = await mailModel.create({ name, email, subject, message });
 
     if (!emailSent) {
       return res.status(400).send("Failed to save email data.");
     }
 
-    // Respond with success
     res
       .status(201)
       .send({ success: "Email sent successfully", data: emailSent });
@@ -120,10 +116,10 @@ const contactUs = async (req, res) => {
     });
 
     const mailOptions = {
-      from: "database@ggecl.com", // Use your email address
-      replyTo: email, // Client's email
-      to: "database@ggecl.com", // Your email address to receive the message
-      subject: "New email from G.G.E.C.L website", // Subject line
+      from: "database@ggecl.com",
+      replyTo: email,
+      to: "database@ggecl.com",
+      subject: "New email from G.G.E.C.L website",
       text: message,
       html: `   
       <div style="
