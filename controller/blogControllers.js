@@ -84,8 +84,6 @@ const updatePost = async (req, res) => {
   } = req.body;
 
   try {
-    // Verify adminAuthId matche
-
     const postUpdate = await BlogModel.findByIdAndUpdate(
       contentId,
       {
@@ -141,7 +139,7 @@ const createAdmin = async (req, res) => {
 
   try {
     const rAuth = await AdminModel.create({ adminAuthId, username });
-    res.status(201).send("admin created"); //
+    res.status(201).send("admin created");
   } catch (error) {
     res.status(500).send({ message: "admin creation failed", details: error });
   }
@@ -156,23 +154,21 @@ const signAdmin = async (req, res) => {
     return res.status(404).send("Wrong admin token");
   }
 
-  // Sign the adminAuthId to a token (you can use a secret key stored in your environment variables)
   const token = jwt.sign(
     { adminAuthId: isAdmin.adminAuthId },
     process.env.JWT_SECRET,
     {
-      expiresIn: "30d", // Set token expiration as needed
+      expiresIn: "30d",
     }
   );
 
   console.log(token);
 
-  // Send the token as a cookie
   res.cookie("adminToken", token, {
-    httpOnly: true, // Keeps the cookie secure
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
-    sameSite: "lax", // Helps prevent CSRF attacks
+    httpOnly: true,
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
   });
 
   res
@@ -201,10 +197,10 @@ const checkAdmin = async (req, res) => {
 const searchUsers = async (req, res) => {
   const { query } = req.body;
 
-  console.log("Search query received:", query); // Log the query to verify
+  console.log("Search query received:", query);
 
   try {
-    const searchQuery = new RegExp(query, "i"); // Case-insensitive, partial match
+    const searchQuery = new RegExp(query, "i");
 
     const posts = await BlogModel.find({
       $or: [
