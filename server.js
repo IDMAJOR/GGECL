@@ -7,6 +7,8 @@ const connectDB = require("./mongoDB/connectDB");
 const blogRoutes = require("./routes/blogRoutes");
 const mailController = require("./routes/mailRoutes");
 const cookieParser = require("cookie-parser");
+const paymentRoute = require("./routes/paymentRoutes");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
@@ -23,6 +25,7 @@ app.use(
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(express.static(__dirname));
+app.use(bodyParser.json());
 
 // server
 
@@ -51,6 +54,7 @@ app.get("/", (req, res) => {
 // blog routes
 app.use("/api/blog", blogRoutes);
 app.use("/api/mail", mailController);
+app.use("/api/payment", paymentRoute);
 
 //  MongoDB Connecton
 connectDB();
@@ -67,6 +71,7 @@ app.listen(PORT, () => {
 /create-posts
 /update
 /delete/:contentId
+/make-payments
 
 ----------------------------/
 */
